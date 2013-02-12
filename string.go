@@ -11,6 +11,8 @@ func (s *stringValue) String() string {
 	return string(*s)
 }
 
+// String returns a value option that stores is value as a string.  The
+// initial value of the string is passed in value.
 func String(name rune, value string, helpvalue ...string) *string {
 	return CommandLine.String(name, value, helpvalue...)
 }
@@ -26,9 +28,8 @@ func StringLong(name string, short rune, value string, helpvalue ...string) *str
 }
 
 func (s *Set) StringLong(name string, short rune, value string, helpvalue ...string) *string {
-	p := value
-	s.StringVarLong(&p, name, short, helpvalue...)
-	return &p
+	s.StringVarLong(&value, name, short, helpvalue...)
+	return &value
 }
 
 func StringVar(p *string, name rune, helpvalue ...string) Option {

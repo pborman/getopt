@@ -55,11 +55,13 @@
 //  var s string
 //  StringVar(&s, "val", 'v', "the optional v).SetOptional()
 //
-// Parsing continues until the first non-option or -- is encountered.
+// Parsing continues until the first non-option or "--" is encountered.
 //
 // The short name "-" can be used, but it either is specified as "-" or as
 // part of a group of options, for example "-f-".  If there are no long
-// options specified then "--f" could also be used"
+// options specified then "--f" could also be used.  If "-" is not declared
+// as an option then the single "-" will also terminate the option processing
+// but unlike "--", the "-" will be part of the remaining arguments.
 //
 // Normally the parsing is performed by calling the Parse function.  If it is
 // important to see the order of the options then the Getopt function should
@@ -130,8 +132,9 @@
 // Normally Foo is used, unless long options are needed.  Setting short to 0
 // creates only a long option.
 //
-// The difference bentween Foo and FooVar is that you pass a pointer, p,  to
+// The difference bentween Foo and FooVar is that you pass a pointer, p, to
 // the location of the value to FooVar.  The default value is simply *p.
+// The initial value of *p is the defaut value of the option.
 //
 // Foo is actually a wrapper around FooVar:
 //

@@ -2,7 +2,7 @@ package getopt
 
 import "fmt"
 
-// An Error is returned by Getopt when it encounters an error
+// An Error is returned by Getopt when it encounters an error.
 type Error struct {
 	ErrorCode        // General reason of failure.
 	Err       error  // The actual error.
@@ -13,7 +13,7 @@ type Error struct {
 // Error returns the error message, implementing the error interface.
 func (i *Error) Error() string { return i.Err.Error() }
 
-// An ErrorCode indicates what sort of error was encountered
+// An ErrorCode indicates what sort of error was encountered.
 type ErrorCode int
 
 const (
@@ -38,6 +38,8 @@ func (e ErrorCode) String() string {
 	return "unknown error"
 }
 
+// unknownOption returns an Error indicating an unknown option was
+// encountered.
 func unknownOption(name interface{}) *Error {
 	i := &Error{ErrorCode: UnknownOption}
 	switch n := name.(type) {

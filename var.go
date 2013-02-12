@@ -6,12 +6,18 @@ import (
 	"runtime"
 )
 
+// Value is the interface to the dynamic value stored in a flag. (The default
+// value is represented as a string.)  Set is passed the string to set the
+// value to as well as the Option that is being processed.
 type Value interface {
 	Set(string, Option) error
 	String() string
 }
 
-// Generic Value type
+// Var creates an option of the specified name. The type and value of the option
+// are represented by the first argument, of type Value, which typically holds a
+// user-defined implementation of Value.  All options are ultimately created
+// as a Var.
 func Var(p Value, name rune, helpvalue ...string) Option {
 	return CommandLine.VarLong(p, "", name, helpvalue...)
 }
