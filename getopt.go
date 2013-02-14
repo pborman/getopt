@@ -388,7 +388,7 @@ Parsing:
 		args = args[1:]
 
 		// end of options?
-		if arg[0] != '-' {
+		if arg == "" || arg[0] != '-' {
 			s.State = EndOfOptions
 			return nil
 		}
