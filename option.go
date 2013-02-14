@@ -22,7 +22,7 @@ type Option interface {
 	// String returns the last value the option was set to.
 	String() string
 
-	// Value returns the Value of the option (if not a flag)
+	// Value returns the Value of the option.
 	Value() Value
 
 	// SetOptional makes the value optional.  The option and value are
