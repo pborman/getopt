@@ -7,11 +7,11 @@ import (
 )
 
 var unsignedTests = []struct {
-	where  string
-	in     []string
-	l      UnsignedLimit
-	out    uint64
-	err    string
+	where string
+	in    []string
+	l     UnsignedLimit
+	out   uint64
+	err   string
 }{
 	{
 		where: loc(),
@@ -19,56 +19,56 @@ var unsignedTests = []struct {
 	{
 		loc(),
 		[]string{"test", "-n", "1010"},
-		UnsignedLimit{Base:2, Bits:5},
+		UnsignedLimit{Base: 2, Bits: 5},
 		10,
 		"",
 	},
 	{
 		loc(),
 		[]string{"test", "-n", "1010"},
-		UnsignedLimit{Base:2, Bits:4},
+		UnsignedLimit{Base: 2, Bits: 4},
 		10,
 		"",
 	},
 	{
 		loc(),
 		[]string{"test", "-n", "1010"},
-		UnsignedLimit{Base:2, Bits:3},
+		UnsignedLimit{Base: 2, Bits: 3},
 		0,
 		"test: value out of range: 1010\n",
 	},
 	{
 		loc(),
 		[]string{"test", "-n", "3"},
-		UnsignedLimit{Min:4, Max:6},
+		UnsignedLimit{Min: 4, Max: 6},
 		0,
 		"test: value out of range (<4): 3\n",
 	},
 	{
 		loc(),
 		[]string{"test", "-n", "4"},
-		UnsignedLimit{Min:4, Max:6},
+		UnsignedLimit{Min: 4, Max: 6},
 		4,
 		"",
 	},
 	{
 		loc(),
 		[]string{"test", "-n", "5"},
-		UnsignedLimit{Min:4, Max:6},
+		UnsignedLimit{Min: 4, Max: 6},
 		5,
 		"",
 	},
 	{
 		loc(),
 		[]string{"test", "-n", "6"},
-		UnsignedLimit{Min:4, Max:6},
+		UnsignedLimit{Min: 4, Max: 6},
 		6,
 		"",
 	},
 	{
 		loc(),
 		[]string{"test", "-n", "7"},
-		UnsignedLimit{Min:4, Max:6},
+		UnsignedLimit{Min: 4, Max: 6},
 		0,
 		"test: value out of range (>6): 7\n",
 	},

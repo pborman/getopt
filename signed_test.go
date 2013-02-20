@@ -7,11 +7,11 @@ import (
 )
 
 var signedNumberTests = []struct {
-	where  string
-	in     []string
-	l      SignedLimit
-	out    int64
-	err    string
+	where string
+	in    []string
+	l     SignedLimit
+	out   int64
+	err   string
 }{
 	{
 		where: loc(),
@@ -19,56 +19,56 @@ var signedNumberTests = []struct {
 	{
 		loc(),
 		[]string{"test", "-n", "1010"},
-		SignedLimit{Base:2, Bits:5},
+		SignedLimit{Base: 2, Bits: 5},
 		10,
 		"",
 	},
 	{
 		loc(),
 		[]string{"test", "-n", "1010"},
-		SignedLimit{Base:2, Bits:4},
+		SignedLimit{Base: 2, Bits: 4},
 		0,
 		"test: value out of range: 1010\n",
 	},
 	{
 		loc(),
 		[]string{"test", "-n", "-1000"},
-		SignedLimit{Base:2, Bits:4},
+		SignedLimit{Base: 2, Bits: 4},
 		-8,
 		"",
 	},
 	{
 		loc(),
 		[]string{"test", "-n", "3"},
-		SignedLimit{Min:4, Max:6},
+		SignedLimit{Min: 4, Max: 6},
 		0,
 		"test: value out of range (<4): 3\n",
 	},
 	{
 		loc(),
 		[]string{"test", "-n", "4"},
-		SignedLimit{Min:4, Max:6},
+		SignedLimit{Min: 4, Max: 6},
 		4,
 		"",
 	},
 	{
 		loc(),
 		[]string{"test", "-n", "5"},
-		SignedLimit{Min:4, Max:6},
+		SignedLimit{Min: 4, Max: 6},
 		5,
 		"",
 	},
 	{
 		loc(),
 		[]string{"test", "-n", "6"},
-		SignedLimit{Min:4, Max:6},
+		SignedLimit{Min: 4, Max: 6},
 		6,
 		"",
 	},
 	{
 		loc(),
 		[]string{"test", "-n", "7"},
-		SignedLimit{Min:4, Max:6},
+		SignedLimit{Min: 4, Max: 6},
 		0,
 		"test: value out of range (>6): 7\n",
 	},

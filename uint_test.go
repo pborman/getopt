@@ -10,7 +10,7 @@ var uintTests = []struct {
 	where string
 	in    []string
 	i     uint
-	uint   uint
+	uint  uint
 	err   string
 }{
 	{

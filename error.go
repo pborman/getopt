@@ -7,7 +7,7 @@ type Error struct {
 	ErrorCode        // General reason of failure.
 	Err       error  // The actual error.
 	Parameter string // Parameter passed to option, if any
-	Name string      // Option that cause error, if any
+	Name      string // Option that cause error, if any
 }
 
 // Error returns the error message, implementing the error interface.

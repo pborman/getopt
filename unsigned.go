@@ -11,7 +11,7 @@ type unsigned uint64
 type UnsignedLimit struct {
 	Base int    // Base for conversion as per strconv.ParseInt
 	Bits int    // Number of bits as per strconv.ParseInt
-	Min  uint64  // Minimum allowed value if both Min and Max are not 0
+	Min  uint64 // Minimum allowed value if both Min and Max are not 0
 	Max  uint64 // Maximum allowed value if both Min and Max are not 0
 }
 
@@ -60,19 +60,19 @@ func (n *unsigned) String() string {
 // implied by the string's prefix: base 16 for "0x", base 8 for "0", and base
 // 10 otherwise.
 func Unsigned(name rune, value uint64, l *UnsignedLimit, helpvalue ...string) *uint64 {
-	return CommandLine.Unsigned(name, value, l, helpvalue ...)
+	return CommandLine.Unsigned(name, value, l, helpvalue...)
 }
 
-func (s *Set)Unsigned(name rune, value uint64, l *UnsignedLimit, helpvalue ...string) *uint64 {
-	return s.UnsignedLong("", name, value, l, helpvalue ...)
+func (s *Set) Unsigned(name rune, value uint64, l *UnsignedLimit, helpvalue ...string) *uint64 {
+	return s.UnsignedLong("", name, value, l, helpvalue...)
 }
 
 func UnsignedLong(name string, short rune, value uint64, l *UnsignedLimit, helpvalue ...string) *uint64 {
-	return CommandLine.UnsignedLong(name, short, value, l, helpvalue ...)
+	return CommandLine.UnsignedLong(name, short, value, l, helpvalue...)
 }
 
-func (s *Set)UnsignedLong(name string, short rune, value uint64, l *UnsignedLimit, helpvalue ...string) *uint64 {
-	s.UnsignedVarLong(&value, name, short, l, helpvalue ...)
+func (s *Set) UnsignedLong(name string, short rune, value uint64, l *UnsignedLimit, helpvalue ...string) *uint64 {
+	s.UnsignedVarLong(&value, name, short, l, helpvalue...)
 	return &value
 }
 

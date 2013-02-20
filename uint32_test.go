@@ -7,11 +7,11 @@ import (
 )
 
 var uint32Tests = []struct {
-	where string
-	in    []string
-	i     uint32
-	uint32   uint32
-	err   string
+	where  string
+	in     []string
+	i      uint32
+	uint32 uint32
+	err    string
 }{
 	{
 		loc(),

@@ -10,7 +10,7 @@ var int16Tests = []struct {
 	where string
 	in    []string
 	i     int16
-	int16   int16
+	int16 int16
 	err   string
 }{
 	{

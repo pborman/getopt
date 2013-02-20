@@ -10,7 +10,7 @@ var int32Tests = []struct {
 	where string
 	in    []string
 	i     int32
-	int32   int32
+	int32 int32
 	err   string
 }{
 	{

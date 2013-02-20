@@ -9,9 +9,9 @@ import (
 type signed int64
 
 type SignedLimit struct {
-	Base int    // Base for conversion as per strconv.ParseInt
-	Bits int    // Number of bits as per strconv.ParseInt
-	Min  int64  // Minimum allowed value if both Min and Max are not 0
+	Base int   // Base for conversion as per strconv.ParseInt
+	Bits int   // Number of bits as per strconv.ParseInt
+	Min  int64 // Minimum allowed value if both Min and Max are not 0
 	Max  int64 // Maximum allowed value if both Min and Max are not 0
 }
 
@@ -59,19 +59,19 @@ func (n *signed) String() string {
 // at least one of the values are not 0.   If Base is 0, the base is implied by
 // the string's prefix: base 16 for "0x", base 8 for "0", and base 10 otherwise.
 func Signed(name rune, value int64, l *SignedLimit, helpvalue ...string) *int64 {
-	return CommandLine.Signed(name, value, l, helpvalue ...)
+	return CommandLine.Signed(name, value, l, helpvalue...)
 }
 
-func (s *Set)Signed(name rune, value int64, l *SignedLimit, helpvalue ...string) *int64 {
-	return s.SignedLong("", name, value, l, helpvalue ...)
+func (s *Set) Signed(name rune, value int64, l *SignedLimit, helpvalue ...string) *int64 {
+	return s.SignedLong("", name, value, l, helpvalue...)
 }
 
 func SignedLong(name string, short rune, value int64, l *SignedLimit, helpvalue ...string) *int64 {
-	return CommandLine.SignedLong(name, short, value, l, helpvalue ...)
+	return CommandLine.SignedLong(name, short, value, l, helpvalue...)
 }
 
-func (s *Set)SignedLong(name string, short rune, value int64, l *SignedLimit, helpvalue ...string) *int64 {
-	s.SignedVarLong(&value, name, short, l, helpvalue ...)
+func (s *Set) SignedLong(name string, short rune, value int64, l *SignedLimit, helpvalue ...string) *int64 {
+	s.SignedVarLong(&value, name, short, l, helpvalue...)
 	return &value
 }
 
