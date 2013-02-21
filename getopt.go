@@ -1,3 +1,7 @@
+// Copyright 2013 Google Inc.  All rights reserved.
+// Use of this source code is governed by a BSD-style
+// license that can be found in the LICENSE file.
+
 // Package getopt provides traditional getopt processing for implementing
 // commands that use traditional command lines.  The standard Go flag package
 // cannot be used to write a program that parses flags the way ls or ssh does,
