@@ -12,6 +12,26 @@
 // package, this package makes common usage easy, but still enables more
 // controlled usage if needed.
 //
+// Typical usage:
+//
+//	// Declare the flags to be used
+//	helpFlag := getopt.Bool('?', "display help")
+//      cmdFlag := getopt.StringLong("command", 'c', "", "the command)
+//
+//	func main() {
+//		// Parse the program arguments
+//		getopt.Parse()
+//		// Get the remaining positional parameters
+//		args := getopt.Args()
+//
+// If you don't want the program to exit on error, use getopt.Getopt:
+//
+//		err := getopt.Getopt(nil)
+//		if err != nil {
+//			// code to handle error
+//			fmt.Fprintln(os.Stderr, err)
+//		}
+//
 // Support is provided for both short (-f) and long (--flag) options.  A single
 // option may have both a short and a long name.  Each option may be a flag
 // or a value.  A value takes an argument.
@@ -212,7 +232,6 @@ var HelpColumn = 20
 func (s *Set) PrintUsage(w io.Writer) {
 	sort.Sort(s.options)
 	flags := ""
-	max := 4
 
 	// Build up the list of short flag names and also compute
 	// how to display the option in the longer help listing.
@@ -227,9 +246,6 @@ func (s *Set) PrintUsage(w io.Writer) {
 		}
 		if opt.uname == "" {
 			opt.uname = opt.usageName()
-		}
-		if max < len(opt.uname) && len(opt.uname) <= HelpColumn-3 {
-			max = len(opt.uname)
 		}
 		if opt.flag && opt.short != 0 && opt.short != '-' {
 			flags += string(opt.short)
@@ -271,7 +287,24 @@ func (s *Set) PrintUsage(w io.Writer) {
 		flags += " " + s.parameters
 	}
 	fmt.Fprintf(w, "Usage: %s%s\n", s.program, flags)
+	s.PrintOptions(w)
+}
 
+// PrintOptions prints the list of options in s to w.
+func (s *Set) PrintOptions(w io.Writer) {
+	sort.Sort(s.options)
+	max := 4
+	for _, opt := range s.options {
+		if opt.name == "" {
+			opt.name = "value"
+		}
+		if opt.uname == "" {
+			opt.uname = opt.usageName()
+		}
+		if max < len(opt.uname) && len(opt.uname) <= HelpColumn-3 {
+			max = len(opt.uname)
+		}
+	}
 	// Now print one or more usage lines per option.
 	for _, opt := range s.options {
 		if opt.uname != "" {

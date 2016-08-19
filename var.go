@@ -59,20 +59,6 @@ func (s *Set) VarLong(p Value, name string, short rune, helpvalue ...string) Opt
 		fmt.Fprintf(os.Stderr, opt.where+": no short or long option given")
 		os.Exit(1)
 	}
-	if opt.short != 0 {
-		if oo, ok := s.shortOptions[opt.short]; ok {
-			fmt.Fprintf(os.Stderr, "%s: -%c already declared at %s", opt.where, opt.short, oo.where)
-			os.Exit(1)
-		}
-		s.shortOptions[opt.short] = opt
-	}
-	if opt.long != "" {
-		if oo, ok := s.longOptions[opt.long]; ok {
-			fmt.Fprintf(os.Stderr, "%s: --%s already declared at %s", opt.where, opt.long, oo.where)
-			os.Exit(1)
-		}
-		s.longOptions[opt.long] = opt
-	}
-	s.options = append(s.options, opt)
+	s.AddOption(opt)
 	return opt
 }

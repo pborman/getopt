@@ -4,7 +4,11 @@
 
 package getopt
 
-import "strings"
+import (
+	"fmt"
+	"os"
+	"strings"
+)
 
 // An Option can be either a Flag or a Value
 type Option interface {
@@ -156,4 +160,35 @@ func (ol optionList) Less(i, j int) bool {
 		return false
 	}
 	return n1 < n2
+}
+
+// AddOption add the option o to set CommandLine if o is not already in set
+// CommandLine.
+func AddOption(o Option) {
+	CommandLine.AddOption(o)
+}
+
+// AddOption add the option o to set s if o is not already in set s.
+func (s *Set) AddOption(o Option) {
+	opt := o.(*option)
+	for _, eopt := range s.options {
+		if opt == eopt {
+			return
+		}
+	}
+	if opt.short != 0 {
+		if oo, ok := s.shortOptions[opt.short]; ok {
+			fmt.Fprintf(os.Stderr, "%s: -%c already declared at %s", opt.where, opt.short, oo.where)
+			os.Exit(1)
+		}
+		s.shortOptions[opt.short] = opt
+	}
+	if opt.long != "" {
+		if oo, ok := s.longOptions[opt.long]; ok {
+			fmt.Fprintf(os.Stderr, "%s: --%s already declared at %s", opt.where, opt.long, oo.where)
+			os.Exit(1)
+		}
+		s.longOptions[opt.long] = opt
+	}
+	s.options = append(s.options, opt)
 }
