@@ -13,7 +13,7 @@ use the following import paths:
 
 This README describes version 2 of the package, which has a simplified API.
 
-USAGE
+## Usage
 
 Getopt supports functionality found in both the standard BSD getopt as well
 as (one of the many versions of) the GNU getopt_long.  Being a Go package,
@@ -57,7 +57,7 @@ If you don't want the program to exit on error, use getopt.Getopt:
 		}
 ```
 
-FLAG SYNTAX
+## Flag Syntax
 
 Support is provided for both short (-f) and long (--flag) options.  A single
 option may have both a short and a long name.  Each option may be a flag or a
@@ -122,7 +122,7 @@ specified then "--f" could also be used.  If "-" is not declared as an option
 then the single "-" will also terminate the option processing but unlike
 "--", the "-" will be part of the remaining arguments.
 
-ADVANCED USAGE
+## Advanced Usage
 
 Normally the parsing is performed by calling the Parse function.  If it is
 important to see the order of the options then the Getopt function should be
@@ -172,7 +172,7 @@ b would be set, cmd would be set to "cmd", and opts.Args() would return {
 Unless an option type explicitly prohibits it, an option may appear more than
 once in the arguments.  The last value provided to the option is the value.
 
-BUILTIN TYPES
+## Builtin Types
 
 The Flag and FlagLong functions support most standard Go types.  For the
 list, see the description of FlagLong below for a list of supported types.
@@ -189,12 +189,12 @@ Except for the Counter, Enum, Signed and Unsigned types, all of these types
 can be declared using Flag and FlagLong by passing in a pointer to the
 appropriate type.
 
-DECLARING NEW FLAG TYPES
+## Declaring New Flag Types
 
 A pointer to any type that implements the Value interface may be passed to
 Flag or FlagLong.
 
-VALUEHELP
+## VALUEHELP
 
 All non-flag options are created with a "valuehelp" as the last parameter.
 Valuehelp should be 0, 1, or 2 strings.  The first string, if provided, is
