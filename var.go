@@ -6,7 +6,6 @@ package getopt
 
 import (
 	"fmt"
-	"os"
 	"runtime"
 )
 
@@ -56,8 +55,8 @@ func (s *Set) VarLong(p Value, name string, short rune, helpvalue ...string) Opt
 		opt.where = fmt.Sprintf("%s:%d", file, line)
 	}
 	if opt.short == 0 && opt.long == "" {
-		fmt.Fprintf(os.Stderr, opt.where+": no short or long option given")
-		os.Exit(1)
+		fmt.Fprintf(stderr, opt.where+": no short or long option given")
+		exit(1)
 	}
 	s.AddOption(opt)
 	return opt
