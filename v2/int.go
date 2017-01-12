@@ -102,7 +102,6 @@ func (s *Set) UintLong(name string, short rune, value uint, helpvalue ...string)
 // Uint16 creates an option that parses its value as a 16 bit unsigned integer.
 func Uint16(name rune, value uint16, helpvalue ...string) *uint16 {
 	return CommandLine.Uint16(name, value, helpvalue...)
-	return &value
 }
 
 func (s *Set) Uint16(name rune, value uint16, helpvalue ...string) *uint16 {
@@ -122,7 +121,6 @@ func (s *Set) Uint16Long(name string, short rune, value uint16, helpvalue ...str
 // Uint32 creates an option that parses its value as a 32 bit unsigned integer.
 func Uint32(name rune, value uint32, helpvalue ...string) *uint32 {
 	return CommandLine.Uint32(name, value, helpvalue...)
-	return &value
 }
 
 func (s *Set) Uint32(name rune, value uint32, helpvalue ...string) *uint32 {
@@ -142,7 +140,6 @@ func (s *Set) Uint32Long(name string, short rune, value uint32, helpvalue ...str
 // Uint64 creates an option that parses its value as a 64 bit unsigned integer.
 func Uint64(name rune, value uint64, helpvalue ...string) *uint64 {
 	return CommandLine.Uint64(name, value, helpvalue...)
-	return &value
 }
 
 func (s *Set) Uint64(name rune, value uint64, helpvalue ...string) *uint64 {
