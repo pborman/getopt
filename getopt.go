@@ -379,7 +379,6 @@ func breakup(s string, max int) []string {
 		a = append(a, s[:x+1])
 		s = s[x+1:]
 	}
-	panic("unreachable")
 }
 
 // Parse uses Getopt to parse args using the options set for s.  The first
