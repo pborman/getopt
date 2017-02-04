@@ -28,11 +28,11 @@ Typical usage:
 	cmdFlag := getopt.StringLong("command", 'c', "default", "the command)
 
 	Declare flags against existing variables.
-	var {
+	var (
 		fileName = "/the/default/path"
 		timeout = time.Second * 5
 		verbose bool
-	}
+	)
 	func init() {
 		getopt.Flag(&verbose, 'v', "be verbose")
 		getopt.FlagLong(&fileName, "path", 0, "the path")
