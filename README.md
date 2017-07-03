@@ -25,7 +25,7 @@ Typical usage:
 ```
 	Declare flags and have getopt return pointers to the values.
 	helpFlag := getopt.Bool('?', "display help")
-	cmdFlag := getopt.StringLong("command", 'c', "default", "the command)
+	cmdFlag := getopt.StringLong("command", 'c', "default", "the command")
 
 	Declare flags against existing variables.
 	var {
