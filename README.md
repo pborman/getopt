@@ -1,5 +1,7 @@
 # getopt
 
+[![GoDoc](https://godoc.org/github.com/pborman/getopt?status.svg)](https://godoc.org/github.com/pborman/getopt)
+
 Package getopt provides traditional getopt processing for implementing
 commands that use traditional command lines.  The standard Go flag package
 cannot be used to write a program that parses flags the way ls or ssh does,
