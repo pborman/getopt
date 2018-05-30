@@ -165,7 +165,7 @@ flags or values.  As an example:
 	}
 ```
 
-If called with set to { "prog", "-a", "cmd", "-b", "arg" } then both and and
+If called with set to { "prog", "-a", "cmd", "-b", "arg" } then both a and
 b would be set, cmd would be set to "cmd", and opts.Args() would return {
 "arg" }.
 
