@@ -1,3 +1,6 @@
+// Package options is under development and may be moved in the future.
+// 26 July 2018
+//
 // Package options provides a structured interface to the getopt package.  It is
 // particularly helpful for parsing an option set more than once and possibly
 // concurrently.  This package was designed to make option specification simpler
