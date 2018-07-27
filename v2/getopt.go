@@ -221,8 +221,20 @@ var DisplayWidth = 80
 //        the u flag's usage is quite long
 var HelpColumn = 20
 
-// PrintUsage prints the usage of the program to w.
+// PrintUsage prints the usage line and set of options of set S to w.
 func (s *Set) PrintUsage(w io.Writer) {
+	var params string
+	if s.parameters != "" {
+		params = " " + s.parameters
+	}
+	fmt.Fprintf(w, "Usage: %s%s\n", s.UsageLine() + params)
+	s.PrintOptions(w)
+	
+}
+
+// UsageLine returns the usage line for the set s.  The set's parameters,
+// if any, are not included.
+func (s *Set) UsageLine() string {
 	sort.Sort(s.options)
 	flags := ""
 
@@ -276,11 +288,7 @@ func (s *Set) PrintUsage(w io.Writer) {
 	if flags != "" {
 		flags = " [" + flags + "]"
 	}
-	if s.parameters != "" {
-		flags += " " + s.parameters
-	}
-	fmt.Fprintf(w, "Usage: %s%s\n", s.program, flags)
-	s.PrintOptions(w)
+	return s.program + flags
 }
 
 // PrintOptions prints the list of options in s to w.
