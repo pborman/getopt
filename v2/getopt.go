@@ -227,7 +227,7 @@ func (s *Set) PrintUsage(w io.Writer) {
 	if s.parameters != "" {
 		params = " " + s.parameters
 	}
-	fmt.Fprintf(w, "Usage: %s%s\n", s.UsageLine() + params)
+	fmt.Fprintf(w, "Usage: %s%s\n", s.UsageLine(), params)
 	s.PrintOptions(w)
 	
 }
