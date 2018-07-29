@@ -26,7 +26,7 @@ var myOptions = theOptions{
 // This is the help we expect from theOptions.  If you change theOptions then
 // you must change this string.  Note that getopt.HelpColumn must be set to 25.
 var theHelp = `
-Usage:  [-v] [-c COUNT] [--lazy value] [-n NUMBER] [--name NAME] [--timeout value] [parameters ...]
+Usage: program [-v] [-c COUNT] [--lazy value] [-n NUMBER] [--name NAME] [--timeout value] [parameters ...]
  -c, --count=COUNT    number of widgets
      --lazy=value     unspecified
  -n NUMBER            set n to NUMBER
@@ -56,6 +56,7 @@ func TestHelp(t *testing.T) {
 		t.Errorf("RegisterNew returned type %T, want %T", dopts, opts)
 	}
 	var buf bytes.Buffer
+	s.SetProgram("program")
 	s.PrintUsage(&buf)
 	if help := buf.String(); help != theHelp {
 		t.Errorf("Got help:\n%s\nWant:\n%s", help, theHelp)
