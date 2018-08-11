@@ -7,6 +7,9 @@
 // cannot be used to write a program that parses flags the way ls or ssh does,
 // for example.  Version 2 of this package has a simplified API.
 //
+// See the github.com/pborman/options package for a simple structure based
+// interface to this package.
+//
 // USAGE
 //
 // Getopt supports functionality found in both the standard BSD getopt as well
