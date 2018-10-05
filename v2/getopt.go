@@ -204,6 +204,7 @@ import (
 	"path"
 	"sort"
 	"strings"
+	"time"
 )
 
 // stderr allows tests to capture output to standard error.
@@ -321,7 +322,31 @@ func (s *Set) PrintOptions(w io.Writer) {
 				fmt.Fprintf(w, " %s\n", opt.uname)
 				continue
 			}
-			help := strings.Split(opt.help, "\n")
+			helpMsg := opt.help
+
+			// If
+			def := opt.defval
+			switch genericValue(opt.value).(type) {
+			case *bool:
+				if def == "false" {
+					def = ""
+				}
+			case *int, *int8, *int16, *int32, *int64,
+				*uint, *uint8, *uint16, *uint32, *uint64,
+				*float32, *float64:
+				if def == "0" {
+					def = ""
+				}
+			case *time.Duration:
+				if def == "0s" {
+					def = ""
+				}
+			}
+			if def != "" {
+				helpMsg += " [" + def + "]"
+			}
+
+			help := strings.Split(helpMsg, "\n")
 			// If they did not put in newlines then we will insert
 			// them to keep the help messages from wrapping.
 			if len(help) == 1 {
