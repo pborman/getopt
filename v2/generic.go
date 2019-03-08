@@ -79,6 +79,15 @@ func (s *Set) long(v interface{}, long string, short rune, helpvalue ...string) 
 	}
 }
 
+// genericValue returns the object underlying the generic Value v, or nil if v
+// is not a generic Value.
+func genericValue(v Value) interface{} {
+	if g, ok := v.(*generic); ok {
+		return g.p
+	}
+	return nil
+}
+
 func (g *generic) Set(value string, opt Option) error {
 	strconvErr := func(err error) error {
 		if e, ok := err.(*strconv.NumError); ok {

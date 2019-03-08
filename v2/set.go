@@ -89,6 +89,9 @@ func Usage() { CommandLine.usage() }
 // found in os.Args.
 func Parse() { CommandLine.Parse(os.Args) }
 
+// Same as parse but not found in version 1 of getopt.
+func ParseV2() { CommandLine.Parse(os.Args) }
+
 // Getops returns the result of calling Getop in the default option set with the
 // command line arguments found in os.Args.  The fn function, which may be nil,
 // is passed to Getopt.
