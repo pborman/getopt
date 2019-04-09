@@ -1,4 +1,4 @@
-# getopt
+# getopt ![build status](https://travis-ci.org/pborman/getopt.svg?branch=master)
 
 Package getopt provides traditional getopt processing for implementing
 commands that use traditional command lines.  The standard Go flag package
