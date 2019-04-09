@@ -30,25 +30,25 @@ var thisPackage string
 // init initializes thisPackage to our full package with the trailing .
 // included.
 func init() {
-        pc, _, _, ok := runtime.Caller(0)
-        if !ok {
-                return
-        }
-        f := runtime.FuncForPC(pc)
-        if f == nil {
-                return
-        }
-        thisPackage = f.Name()
-        x := strings.LastIndex(thisPackage, "/")
-        if x < 0 {
-                return
-        }
-        y := strings.Index(thisPackage[x:], ".")
-        if y < 0 {
-                return
-        }
-        // thisPackage includes the trailing . after the package name.
-        thisPackage = thisPackage[:x+y+1]
+	pc, _, _, ok := runtime.Caller(0)
+	if !ok {
+		return
+	}
+	f := runtime.FuncForPC(pc)
+	if f == nil {
+		return
+	}
+	thisPackage = f.Name()
+	x := strings.LastIndex(thisPackage, "/")
+	if x < 0 {
+		return
+	}
+	y := strings.Index(thisPackage[x:], ".")
+	if y < 0 {
+		return
+	}
+	// thisPackage includes the trailing . after the package name.
+	thisPackage = thisPackage[:x+y+1]
 }
 
 // calledFrom returns a string containing the file and linenumber of the first

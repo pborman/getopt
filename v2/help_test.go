@@ -2,9 +2,28 @@ package getopt
 
 import (
 	"bytes"
+	"fmt"
+	"strings"
 	"testing"
 	"time"
 )
+
+type flagValue bool
+
+func (f *flagValue) Set(value string, opt Option) error {
+	switch strings.ToLower(value) {
+	case "true", "t", "on", "1":
+		*f = true
+	case "false", "f", "off", "0":
+		*f = false
+	default:
+		return fmt.Errorf("invalid flagValue %q", value)
+	}
+	return nil
+}
+func (f *flagValue) String() string {
+	return fmt.Sprint(bool(*f))
+}
 
 func TestHelpDefaults(t *testing.T) {
 	HelpColumn = 40
@@ -77,6 +96,12 @@ func TestHelpDefaults(t *testing.T) {
 	set.FlagLong(&str, "string", 0, "string value")
 	set.FlagLong(&sstr, "string_set", 0, "set string value")
 
+	var fv flagValue
+	set.FlagLong(&fv, "vbool", 0, "value bool").SetFlag()
+
+	var fvo flagValue = true
+	set.FlagLong(&fvo, "vbool_on", 0, "value bool").SetFlag()
+
 	want := `
      --duration=value      duration value
      --duration_set=value  set duration value [1s]
@@ -108,6 +133,8 @@ func TestHelpDefaults(t *testing.T) {
      --uint8=value         uint8 value
      --uint8_set=value     set uint8 value [8]
      --uint_set=value      set uint value [1]
+     --vbool               value bool
+     --vbool_on            value bool [true]
 `[1:]
 
 	var buf bytes.Buffer
