@@ -150,7 +150,6 @@ func (s *Set) SetParameters(parameters string) {
 // Parameters returns the parameters set by SetParameters on s.
 func (s *Set) Parameters() string { return s.parameters }
 
-
 // SetProgram sets the program name to program.  Normally it is determined
 // from the zeroth command line argument (see os.Args).
 func SetProgram(program string) {
