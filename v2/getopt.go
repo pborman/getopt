@@ -324,7 +324,8 @@ func (s *Set) PrintOptions(w io.Writer) {
 			}
 			helpMsg := opt.help
 
-			// If
+			// If the default value is the known zero value
+			// then don't display it.
 			def := opt.defval
 			switch genericValue(opt.value).(type) {
 			case *bool:
@@ -339,6 +340,10 @@ func (s *Set) PrintOptions(w io.Writer) {
 				}
 			case *time.Duration:
 				if def == "0s" {
+					def = ""
+				}
+			default:
+				if opt.flag && def == "false" {
 					def = ""
 				}
 			}
