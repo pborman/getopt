@@ -1,3 +1,3 @@
-module github.com/sambadevi/getopt
+module github.com/pborman/getopt
 
 go 1.12
