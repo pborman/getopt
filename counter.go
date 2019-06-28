@@ -1,4 +1,4 @@
-// Copyright 2013 Google Inc.  All rights reserved.
+// Copyright 2017 Google Inc.  All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -45,37 +45,25 @@ func (b *counterValue) String() string {
 //
 // Further instances of the option will increment from the set value.
 func Counter(name rune, helpvalue ...string) *int {
-	return CommandLine.Counter(name, helpvalue...)
+	var p int
+	CommandLine.FlagLong((*counterValue)(&p), "", name, helpvalue...).SetFlag()
+	return &p
 }
 
 func (s *Set) Counter(name rune, helpvalue ...string) *int {
 	var p int
-	s.CounterVarLong(&p, "", name, helpvalue...)
+	s.FlagLong((*counterValue)(&p), "", name, helpvalue...).SetFlag()
 	return &p
 }
 
 func CounterLong(name string, short rune, helpvalue ...string) *int {
-	return CommandLine.CounterLong(name, short, helpvalue...)
+	var p int
+	CommandLine.FlagLong((*counterValue)(&p), name, short, helpvalue...).SetFlag()
+	return &p
 }
 
 func (s *Set) CounterLong(name string, short rune, helpvalue ...string) *int {
 	var p int
-	s.CounterVarLong(&p, name, short, helpvalue...)
+	s.FlagLong((*counterValue)(&p), name, short, helpvalue...).SetFlag()
 	return &p
-}
-
-func CounterVar(p *int, name rune, helpvalue ...string) Option {
-	return CommandLine.CounterVar(p, name, helpvalue...)
-}
-
-func (s *Set) CounterVar(p *int, name rune, helpvalue ...string) Option {
-	return s.CounterVarLong(p, "", name, helpvalue...)
-}
-
-func CounterVarLong(p *int, name string, short rune, helpvalue ...string) Option {
-	return CommandLine.CounterVarLong(p, name, short, helpvalue...)
-}
-
-func (s *Set) CounterVarLong(p *int, name string, short rune, helpvalue ...string) Option {
-	return s.VarLong((*counterValue)(p), name, short, helpvalue...).SetFlag()
 }

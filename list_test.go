@@ -1,4 +1,4 @@
-// Copyright 2013 Google Inc.  All rights reserved.
+// Copyright 2017 Google Inc.  All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -72,7 +72,7 @@ func TestList(t *testing.T) {
 func TestDefaultList(t *testing.T) {
 	reset()
 	list := []string{"d1", "d2", "d3"}
-	ListVar(&list, 'l')
+	Flag(&list, 'l')
 	parse([]string{"test"})
 
 	want := []string{"d1", "d2", "d3"}

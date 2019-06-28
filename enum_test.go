@@ -1,4 +1,4 @@
-// Copyright 2013 Google Inc.  All rights reserved.
+// Copyright 2017 Google Inc.  All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -14,6 +14,7 @@ var enumTests = []struct {
 	where  string
 	in     []string
 	values []string
+	def    string
 	out    string
 	err    string
 }{
@@ -23,11 +24,13 @@ var enumTests = []struct {
 		[]string{},
 		"",
 		"",
+		"",
 	},
 	{
 		loc(),
 		[]string{"test", "-e", "val1"},
 		[]string{"val1", "val2"},
+		"",
 		"val1",
 		"",
 	},
@@ -35,6 +38,15 @@ var enumTests = []struct {
 		loc(),
 		[]string{"test", "-e", "val1", "-e", "val2"},
 		[]string{"val1", "val2"},
+		"",
+		"val2",
+		"",
+	},
+	{
+		loc(),
+		[]string{"test"},
+		[]string{"val1", "val2"},
+		"val2",
 		"val2",
 		"",
 	},
@@ -42,6 +54,7 @@ var enumTests = []struct {
 		loc(),
 		[]string{"test", "-e", "val3"},
 		[]string{"val1", "val2"},
+		"",
 		"",
 		"test: invalid value: val3\n",
 	},
@@ -54,7 +67,7 @@ func TestEnum(t *testing.T) {
 		}
 
 		reset()
-		e := Enum('e', tt.values)
+		e := Enum('e', tt.values, tt.def)
 		parse(tt.in)
 		if s := checkError(tt.err); s != "" {
 			t.Errorf("%s: %s", tt.where, s)
