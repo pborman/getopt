@@ -1,4 +1,4 @@
-// Copyright 2013 Google Inc.  All rights reserved.
+// Copyright 2017 Google Inc.  All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -72,20 +72,5 @@ func TestCounter(t *testing.T) {
 		if got, want := *cnt, tt.cnt; got != want {
 			t.Errorf("%s: got %v, want %v", tt.where, got, want)
 		}
-	}
-
-	reset()
-	c := 5
-	opt := CounterVar(&c, 'c')
-	parse([]string{"test", "-c"})
-	if c != 6 {
-		t.Errorf("got %d, want 6", c)
-	}
-	if opt.Count() != 1 {
-		t.Errorf("got %d, want 1", c)
-	}
-	Reset()
-	if c != 5 {
-		t.Errorf("got %d, want 5", c)
 	}
 }

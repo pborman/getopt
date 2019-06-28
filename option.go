@@ -1,4 +1,4 @@
-// Copyright 2013 Google Inc.  All rights reserved.
+// Copyright 2017 Google Inc.  All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -16,6 +16,14 @@ type Option interface {
 	// otherwise if there is a short name then this will be the short name
 	// as a string, else it will be the long name.
 	Name() string
+
+	// ShortName always returns the short name of the option, or "" if there
+	// is no short name.  The name does not include the "-".
+	ShortName() string
+
+	// LongName always returns the long name of the option, or "" if there
+	// is no long name.  The name does not include the "--".
+	LongName() string
 
 	// IsFlag returns true if Option is a flag.
 	IsFlag() bool
@@ -43,7 +51,7 @@ type Option interface {
 	// SetFlag makes the value a flag.  Flags are boolean values and
 	// normally do not taken a value.  They are set to true when seen.
 	// If a value is passed in the long form then it must be on, case
-	// insenstive, one of "true", "false", "t", "f", "on", "off", "1", "0".
+	// insensitivinsensitive, one of "true", "false", "t", "f", "on", "off", "1", "0".
 	// SetFlag returns the Option
 	SetFlag() Option
 
@@ -132,6 +140,17 @@ func (o *option) Name() string {
 		return "-" + string(o.short)
 	}
 	return "--" + o.long
+}
+
+func (o *option) ShortName() string {
+	if o.short != 0 {
+		return string(o.short)
+	}
+	return ""
+}
+
+func (o *option) LongName() string {
+	return o.long
 }
 
 // Reset rests an option so that it appears it has not yet been seen.

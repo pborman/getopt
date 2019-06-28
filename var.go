@@ -1,4 +1,4 @@
-// Copyright 2013 Google Inc.  All rights reserved.
+// Copyright 2017 Google Inc.  All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -7,33 +7,70 @@ package getopt
 import (
 	"fmt"
 	"runtime"
+	"strings"
 )
 
-// Value is the interface to the dynamic value stored in a flag. (The default
-// value is represented as a string.)  Set is passed the string to set the
-// value to as well as the Option that is being processed.
+// Value is the interface to the dynamic value stored in a flag.  Flags of type
+// Value are declared using the Flag and FlagLong functions.
 type Value interface {
-	Set(string, Option) error
+	// Set converts value into the appropriate type and assigns it to the
+	// receiver value.  Option details are provided via opt (such as the
+	// flags name).
+	//
+	// Set is used to reset the value of an option to its default value
+	// (which is stored in string form internally).
+	Set(value string, opt Option) error
+
+	// String returns the value of the flag as a string.
 	String() string
 }
 
-// Var creates an option of the specified name. The type and value of the option
-// are represented by the first argument, of type Value, which typically holds a
-// user-defined implementation of Value.  All options are ultimately created
-// as a Var.
-func Var(p Value, name rune, helpvalue ...string) Option {
-	return CommandLine.VarLong(p, "", name, helpvalue...)
+var thisPackage string
+
+// init initializes thisPackage to our full package with the trailing .
+// included.
+func init() {
+	pc, _, _, ok := runtime.Caller(0)
+	if !ok {
+		return
+	}
+	f := runtime.FuncForPC(pc)
+	if f == nil {
+		return
+	}
+	thisPackage = f.Name()
+	x := strings.LastIndex(thisPackage, "/")
+	if x < 0 {
+		return
+	}
+	y := strings.Index(thisPackage[x:], ".")
+	if y < 0 {
+		return
+	}
+	// thisPackage includes the trailing . after the package name.
+	thisPackage = thisPackage[:x+y+1]
 }
 
-func VarLong(p Value, name string, short rune, helpvalue ...string) Option {
-	return CommandLine.VarLong(p, name, short, helpvalue...)
+// calledFrom returns a string containing the file and linenumber of the first
+// stack frame above us that is not part of this package and is not a test.
+// This is used to determine where a flag was initialized.
+func calledFrom() string {
+	for i := 2; ; i++ {
+		pc, file, line, ok := runtime.Caller(i)
+		if !ok {
+			return ""
+		}
+		if !strings.HasSuffix(file, "_test.go") {
+			f := runtime.FuncForPC(pc)
+			if f != nil && strings.HasPrefix(f.Name(), thisPackage) {
+				continue
+			}
+		}
+		return fmt.Sprintf("%s:%d", file, line)
+	}
 }
 
-func (s *Set) Var(p Value, name rune, helpvalue ...string) Option {
-	return s.VarLong(p, "", name, helpvalue...)
-}
-
-func (s *Set) VarLong(p Value, name string, short rune, helpvalue ...string) Option {
+func (s *Set) addFlag(p Value, name string, short rune, helpvalue ...string) Option {
 	opt := &option{
 		short:  short,
 		long:   name,
@@ -51,8 +88,8 @@ func (s *Set) VarLong(p Value, name string, short rune, helpvalue ...string) Opt
 	default:
 		panic("Too many strings for String helpvalue")
 	}
-	if _, file, line, ok := runtime.Caller(1); ok {
-		opt.where = fmt.Sprintf("%s:%d", file, line)
+	if where := calledFrom(); where != "" {
+		opt.where = where
 	}
 	if opt.short == 0 && opt.long == "" {
 		fmt.Fprintf(stderr, opt.where+": no short or long option given")
