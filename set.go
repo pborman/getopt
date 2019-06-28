@@ -1,4 +1,4 @@
-// Copyright 2013 Google Inc.  All rights reserved.
+// Copyright 2017 Google Inc.  All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -8,9 +8,10 @@ import (
 	"io"
 	"os"
 	"sort"
+	"sync"
 )
 
-// A Termination says why Getopt returned.
+// A State is why the Getopt returned.
 type State int
 
 const (
@@ -25,7 +26,8 @@ const (
 )
 
 type Set struct {
-	State // State of getopt
+	stateMu sync.Mutex
+	state   State
 
 	// args are the parameters remaining after parsing the optoins.
 	args []string
@@ -60,6 +62,20 @@ func New() *Set {
 	return s
 }
 
+func (s *Set) setState(state State) {
+	s.stateMu.Lock()
+	s.state = state
+	s.stateMu.Unlock()
+}
+
+// State returns the current state of the Set s.  The state is normally the
+// reason the most recent call to Getopt returned.
+func (s *Set) State() State {
+	s.stateMu.Lock()
+	defer s.stateMu.Unlock()
+	return s.state
+}
+
 // The default set of command-line options.
 var CommandLine = New()
 
@@ -72,6 +88,9 @@ func Usage() { CommandLine.usage() }
 // Parse calls Parse in the default option set with the command line arguments
 // found in os.Args.
 func Parse() { CommandLine.Parse(os.Args) }
+
+// Same as parse but not found in version 1 of getopt.
+func ParseV2() { CommandLine.Parse(os.Args) }
 
 // Getops returns the result of calling Getop in the default option set with the
 // command line arguments found in os.Args.  The fn function, which may be nil,
@@ -128,17 +147,23 @@ func (s *Set) SetParameters(parameters string) {
 	s.parameters = parameters
 }
 
-// SetProgram sets the program name to program.  Nomrally it is determined
+// Parameters returns the parameters set by SetParameters on s.
+func (s *Set) Parameters() string { return s.parameters }
+
+// SetProgram sets the program name to program.  Normally it is determined
 // from the zeroth command line argument (see os.Args).
 func SetProgram(program string) {
 	CommandLine.program = program
 }
 
-// SetProgram sets s's program name to program.  Nomrally it is determined
+// SetProgram sets s's program name to program.  Normally it is determined
 // from the zeroth argument passed to Getopt or Parse.
 func (s *Set) SetProgram(program string) {
 	s.program = program
 }
+
+// Program returns the program name associated with Set s.
+func (s *Set) Program() string { return s.program }
 
 // SetUsage sets the function used by Parse to display the commands usage
 // on error.  It defaults to calling PrintUsage(os.Stderr).
