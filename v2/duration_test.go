@@ -40,13 +40,13 @@ var durationTests = []struct {
 		loc(),
 		[]string{"test", "-d1"},
 		17, 42,
-		"test: time: missing unit in duration 1\n",
+		"test: time: missing unit in duration",
 	},
 	{
 		loc(),
 		[]string{"test", "--duration", "foo"},
 		17, 42,
-		"test: time: invalid duration foo\n",
+		"test: time: invalid duration",
 	},
 }
 

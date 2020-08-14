@@ -199,7 +199,7 @@ func TestGeneric(t *testing.T) {
 			def:   time.Second * 2,
 			in:    []string{"test", "-s42"},
 			str:   "2s",
-			err:   "test: time: missing unit in duration 42",
+			err:   "test: time: missing unit in duration",
 		},
 
 		{
