@@ -21,6 +21,7 @@ func reset() {
 	CommandLine.options = nil
 	CommandLine.args = nil
 	CommandLine.program = ""
+	CommandLine.requiredGroups = nil
 	errorString = ""
 }
 

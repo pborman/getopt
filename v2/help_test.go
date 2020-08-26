@@ -102,7 +102,16 @@ func TestHelpDefaults(t *testing.T) {
 	var fvo flagValue = true
 	set.FlagLong(&fvo, "vbool_on", 0, "value bool").SetFlag()
 
+	required := 17
+	set.FlagLong(&required, "required", 0, "a required option").Mandatory()
+
+	var a, b bool
+	set.Flag(&a, 'a', "use method A").SetGroup("method")
+	set.Flag(&b, 'b', "use method B").SetGroup("method")
+
 	want := `
+ -a                        use method A {method}
+ -b                        use method B {method}
      --duration=value      duration value
      --duration_set=value  set duration value [1s]
  -f, --bool_false          false bool value
@@ -120,6 +129,7 @@ func TestHelpDefaults(t *testing.T) {
      --int8=value          int8 value
      --int8_set=value      set int8 value [8]
      --int_set=value       set int value [1]
+     --required=value      a required option [17] (required)
      --string=value        string value
      --string_set=value    set string value [string]
  -t, --bool_true           true bool value [true]
