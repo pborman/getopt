@@ -153,3 +153,38 @@ func TestHelpDefaults(t *testing.T) {
 		t.Errorf("got:\n%s\nwant:\n%s", got, want)
 	}
 }
+
+func TestHelpString(t *testing.T) {
+
+	set := New()
+
+	descriptions := []string{
+		"test description",
+		"",
+		"💣💣",
+	}
+
+	testOption := func(t *testing.T, o Option, expected string) {
+		if o == nil {
+			t.Fatal("could not find option")
+		}
+
+		actual := o.Help()
+
+		if actual != expected {
+			t.Error("got", actual, "expected", expected)
+		}
+	}
+
+	for i, expected := range descriptions {
+
+		long := fmt.Sprintf("test%d", i)
+		short := rune('a' + i)
+
+		set.FlagLong(&i, long, short, expected)
+
+		testOption(t, set.Lookup(long), expected)
+
+		testOption(t, set.Lookup(short), expected)
+	}
+}
