@@ -24,7 +24,7 @@ func (s *listValue) String() string {
 }
 
 // List creates an option that returns a slice of strings.  The parameters
-// passed are converted from a comma seperated value list into a slice.
+// passed are converted from a comma separated value list into a slice.
 // Subsequent occurrences append to the list.
 func List(name rune, helpvalue ...string) *[]string {
 	return CommandLine.List(name, helpvalue...)
@@ -46,7 +46,7 @@ func (s *Set) ListLong(name string, short rune, helpvalue ...string) *[]string {
 	return &p
 }
 
-// ListVar creats a list option and places the values in p.  If p is pointing
+// ListVar creates a list option and places the values in p.  If p is pointing
 // to a list of values then those are considered the default values.  The first
 // time name is seen in the options the list will be set to list specified by
 // the parameter to the option.  Subsequent instances of the option will append
