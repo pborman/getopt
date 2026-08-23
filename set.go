@@ -27,7 +27,7 @@ const (
 type Set struct {
 	State // State of getopt
 
-	// args are the parameters remaining after parsing the optoins.
+	// args are the parameters remaining after parsing the options.
 	args []string
 
 	// program is the name of the program for usage and error messages.

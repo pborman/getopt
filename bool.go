@@ -36,7 +36,7 @@ func (b *boolValue) String() string {
 //  --option=true
 //  --o=false
 //
-// Its value is case insenstive and one of true, false, t, f, on, off, t and 0.
+// Its value is case insensitive and one of true, false, t, f, on, off, t and 0.
 func Bool(name rune, helpvalue ...string) *bool {
 	return CommandLine.Bool(name, helpvalue...)
 }

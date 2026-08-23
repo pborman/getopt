@@ -43,7 +43,7 @@ type Option interface {
 	// SetFlag makes the value a flag.  Flags are boolean values and
 	// normally do not taken a value.  They are set to true when seen.
 	// If a value is passed in the long form then it must be on, case
-	// insenstive, one of "true", "false", "t", "f", "on", "off", "1", "0".
+	// insensitive, one of "true", "false", "t", "f", "on", "off", "1", "0".
 	// SetFlag returns the Option
 	SetFlag() Option
 

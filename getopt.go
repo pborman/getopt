@@ -162,7 +162,7 @@
 //
 // The difference bentween Foo and FooVar is that you pass a pointer, p, to the
 // location of the value to FooVar.  The default value is simply *p.  The
-// initial value of *p is the defaut value of the option.
+// initial value of *p is the default value of the option.
 //
 // Foo is actually a wrapper around FooVar:
 //
@@ -400,7 +400,7 @@ func (s *Set) Parse(args []string) {
 // Getopt returns nil when all options have been processed (a non-option
 // argument was encountered, "--" was encountered, or fn returned false).
 //
-// On error getopt returns a refernce to an InvalidOption (which implements
+// On error getopt returns a reference to an InvalidOption (which implements
 // the error interface).
 func (s *Set) Getopt(args []string, fn func(Option) bool) (err error) {
 	s.State = InProgress
