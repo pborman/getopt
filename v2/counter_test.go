@@ -15,11 +15,13 @@ var counterTests = []struct {
 	in    []string
 	c     int
 	cnt   int
+	myint int
 	err   string
 }{
 	{
 		loc(),
 		[]string{},
+		0,
 		0,
 		0,
 		"",
@@ -29,26 +31,29 @@ var counterTests = []struct {
 		[]string{"test", "-c", "--cnt"},
 		1,
 		1,
+		0,
 		"",
 	},
 	{
 		loc(),
-		[]string{"test", "-cc", "-c", "--cnt", "--cnt"},
+		[]string{"test", "-cc", "-c", "--cnt", "--cnt", "-mmmm", "--myint"},
 		3,
 		2,
+		5,
 		"",
 	},
 	{
 		loc(),
-		[]string{"test", "--c=17", "--cnt=42"},
+		[]string{"test", "--c=17", "--cnt=42", "--m=13"},
 		17,
 		42,
+		13,
 		"",
 	},
 	{
 		loc(),
 		[]string{"test", "--cnt=false"},
-		0, 0,
+		0, 0, 0,
 		"test: not a valid number: false\n",
 	},
 }
@@ -56,8 +61,10 @@ var counterTests = []struct {
 func TestCounter(t *testing.T) {
 	for x, tt := range counterTests {
 		reset()
+		var myint int
 		c := Counter('c')
 		cnt := CounterLong("cnt", 0)
+		CounterLongVar(&myint, "myint", 'm')
 		if strings.Index(tt.where, ":-") > 0 {
 			tt.where = fmt.Sprintf("#%d", x)
 		}
@@ -70,6 +77,9 @@ func TestCounter(t *testing.T) {
 			t.Errorf("%s: got %v, want %v", tt.where, got, want)
 		}
 		if got, want := *cnt, tt.cnt; got != want {
+			t.Errorf("%s: got %v, want %v", tt.where, got, want)
+		}
+		if got, want := myint, tt.myint; got != want {
 			t.Errorf("%s: got %v, want %v", tt.where, got, want)
 		}
 	}
